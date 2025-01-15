@@ -1,0 +1,32 @@
+-- (1)고객 테이블에서 모든 고객의 이름과 이메일 출력
+SELECT "NAME", EMAIL FROM CUSTOMERS;
+
+-- (1)계좌 테이블에서 모든 계좌 ID와 잔액을 출력
+SELECT ACCOUNT_ID, BALANCE FROM ACCOUNTS;
+
+-- (1)거래 테이블에서 모든 거래의 금액과 거래 유형을 출력
+SELECT AMOUNT, TRANSACTION_TYPE FROM TRANSACTIONS;
+
+-- (2)고객 테이블에서 address100을 가진 고객의 이름과 전화번호 출력
+SELECT "NAME", PHONE FROM CUSTOMERS WHERE ADDRESS LIKE '%Address100%';
+
+-- (2)계좌 테이블에서 잔액이 50,000 이상인 계좌의 계좌 ID와 잔액을 출력
+SELECT ACCOUNT_ID, BALANCE FROM ACCOUNTS WHERE BALANCE >= 50000;
+
+-- (2)거래 테이블에서 거래 금액이 음수인 거래의 ID와 금액을 출력
+SELECT TRANSACTION_ID, AMOUNT FROM TRANSACTIONS WHERE AMOUNT < 0;
+
+-- (2)대출 테이블에서 상태가 "APPROVED"인 대출의 대출 금액과 고객 ID를 출력
+SELECT AMOUNT, CUSTOMER_ID FROM LOANS WHERE STATUS = 'APPROVED';
+
+-- (3)고객 테이블에서 "555-1000"으로 시작하는 전화번호를 가진 고객의 이름과 이메일을 출력
+SELECT "NAME", EMAIL FROM CUSTOMERS WHERE PHONE LIKE '555-1000%';
+
+-- (3)계좌 테이블에서 계좌 유형이 "SAVINGS"이고 잔액이 10,000 이상인 계좌의 계좌ID와 잔액을 출력
+SELECT ACCOUNT_ID, BALANCE FROM ACCOUNTS WHERE ACCOUNT_TYPE = 'SAVINGS' AND BALANCE >= 10000;
+
+-- (3)거래 테이블에서 거래 유형이 "DEPOSIT"이고 거래 금액이 1,000 이상인 거래의 거래ID와 금액을 출력
+SELECT TRANSACTION_ID, AMOUNT FROM TRANSACTIONS WHERE TRANSACTION_TYPE = 'DEPOSIT' AND AMOUNT >= 1000;
+
+-- (3)대출 테이블에서 대출 금액이 50,000 이상이며 대출 상태가 "PENDING"인 대출ID와 금액을 출력
+SELECT LOAN_ID, AMOUNT FROM LOANS WHERE AMOUNT >= 50000 AND STATUS = 'PENDING';
