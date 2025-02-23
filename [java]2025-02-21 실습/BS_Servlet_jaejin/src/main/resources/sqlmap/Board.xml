@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="BS_Servlet.Board">
+    <!-- 게시글 삽입 -->
+    <insert id="insertOne" parameterType="org.example.bs_servlet_jaejin.vo.BoardVO">
+        <![CDATA[
+        INSERT INTO board (title, content, writer_id, created_at)
+        VALUES (#{title}, #{content}, #{writer_id}, SYSDATE)
+        ]]>
+    </insert>
+    <!-- 게시글 목록 조회 -->
+    <select id="selectAllPosts" resultType="org.example.bs_servlet_jaejin.vo.BoardVO">
+        <![CDATA[
+        SELECT *
+        FROM board
+        ORDER BY board_id
+        ]]>
+    </select>
+
+    <select id="selectPostById" parameterType="int" resultType="org.example.bs_servlet_jaejin.vo.BoardVO">
+        SELECT * FROM board WHERE board_id = #{id}
+    </select>
+
+    <delete id="deletePost" parameterType="int">
+        DELETE FROM board WHERE board_id = #{id}
+    </delete>
+
+    <select id="searchPostsByKeyword" parameterType="string" resultType="org.example.bs_servlet_jaejin.vo.BoardVO">
+        <![CDATA[
+        SELECT *
+        FROM board
+        WHERE title LIKE '%' || #{keyword} || '%'
+           OR content LIKE '%' || #{keyword} || '%'
+        ORDER BY board_id
+        ]]>
+    </select>
+
+    <update id="updatePost" parameterType="org.example.bs_servlet_jaejin.vo.BoardVO">
+        <![CDATA[
+        UPDATE board
+        SET title = #{title}, content = #{content}
+        WHERE board_id = #{board_id}
+        ]]>
+    </update>
+
+    <insert id="addLike" parameterType="org.example.bs_servlet_jaejin.vo.LikesVO">
+        <![CDATA[
+        INSERT INTO LIKES (BOARD_ID, USER_ID)
+        VALUES (#{board_id}, #{user_id})
+        ]]>
+    </insert>
+
+    <delete id="removeLike" parameterType="org.example.bs_servlet_jaejin.vo.LikesVO">
+        <![CDATA[
+        DELETE FROM LIKES
+        WHERE BOARD_ID = #{board_id} AND USER_ID = #{user_id}
+        ]]>
+    </delete>
+
+    <select id="isLikedByUser" parameterType="org.example.bs_servlet_jaejin.vo.LikesVO" resultType="int">
+        <![CDATA[
+        SELECT COUNT(*)
+        FROM LIKES
+        WHERE BOARD_ID = #{board_id} AND USER_ID = #{user_id}
+        ]]>
+    </select>
+
+    <update id="incrementLikesCount" parameterType="int">
+        <![CDATA[
+        UPDATE board
+        SET like_count = like_count + 1
+        WHERE board_id = #{board_id}
+        ]]>
+    </update>
+
+    <update id="decrementLikesCount" parameterType="int">
+        <![CDATA[
+        UPDATE board
+        SET like_count = like_count - 1
+        WHERE board_id = #{board_id}
+        ]]>
+    </update>
+
+    <insert id="addComment" parameterType="org.example.bs_servlet_jaejin.vo.CommentVO">
+        <![CDATA[
+        INSERT INTO comments (board_id, user_id, content)
+        VALUES (#{board_id}, #{user_id}, #{content})
+        ]]>
+    </insert>
+
+    <delete id="deleteComment" parameterType="int">
+        DELETE FROM comments
+        WHERE id = #{commentId}
+    </delete>
+
+    <select id="getCommentsByBoardId" parameterType="int" resultType="org.example.bs_servlet_jaejin.vo.CommentVO">
+        SELECT *
+        FROM comments
+        WHERE board_id = #{board_id}
+        ORDER BY created_at ASC
+    </select>
+
+    <update id="incrementCommentsCount" parameterType="int">
+        <![CDATA[
+        UPDATE board
+        SET comment_count = comment_count + 1
+        WHERE board_id = #{boardId}
+        ]]>
+    </update>
+
+    <update id="decrementCommentsCount" parameterType="int">
+        <![CDATA[
+        UPDATE board
+        SET comment_count = comment_count - 1
+        WHERE board_id = #{boardId}
+        ]]>
+    </update>
+
+    <update id="incrementViewCount" parameterType="int">
+        <![CDATA[
+        UPDATE board
+        SET view_count = view_count + 1
+        WHERE board_id = #{boardId}
+        ]]>
+    </update>
+
+</mapper>
