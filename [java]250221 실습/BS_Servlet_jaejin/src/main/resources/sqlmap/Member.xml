@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="BS_Servlet.Member">
+    <select id="selectUserByIDPW" parameterType="map" resultType="org.example.bs_servlet_jaejin.vo.MemberVO">
+        <![CDATA[
+        SELECT member_name, member_id, member_pw
+        FROM membertbl
+        WHERE member_id = #{id}
+          AND member_pw = #{pw}
+        ]]>
+    </select>
+</mapper>

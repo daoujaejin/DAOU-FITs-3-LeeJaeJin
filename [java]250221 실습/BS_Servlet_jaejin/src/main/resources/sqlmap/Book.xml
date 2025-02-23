@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="BS_Servlet.MyBook">
+    <select id="selectBooksByNamePrice" parameterType="map"
+            resultType="org.example.bs_servlet_jaejin.vo.BookVO">
+        <![CDATA[
+            SELECT bisbn, btitle, bprice, bauthor
+            FROM book
+            WHERE btitle LIKE '%' || #{title} || '%'
+                AND bprice < #{maxPrice}
+        ]]>
+    </select>
+
+    <select id="selectByISBN" parameterType="String" resultType="org.example.bs_servlet_jaejin.vo.BookVO">
+        <![CDATA[
+        SELECT bisbn, btitle, bprice, bauthor
+        FROM book
+        WHERE bisbn = #{isbn}
+        ]]>
+    </select>
+</mapper>
